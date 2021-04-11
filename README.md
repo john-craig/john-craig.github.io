@@ -5,11 +5,13 @@
 	In the case of Joplin this involves looking through a specific notebook and pulling out all the entries which are to-dos and have tags set on them. I use tags to specify the day that the item is supposed to correspond to-- there is a feature for setting due dates on to-dos in Joplin, but that causes an alarm to go off on my phone, which I sort of hate.
 	For LibreOffice this is a little more complicated. I have the documents I use for tracking my tasks arranged in a certain format, like so:
 
+```
 [Weekday]
 	Tasks:
-    • [Incomplete To-Do]
+    	• [Incomplete To-Do]
 	Deeds:
-    • [Complete To-Do]
+    	• [Complete To-Do]
+```
 
 This requires more customized parsing, although it’s a bit easier to determine the day of the week, for example.
 	At the moment the program builds a Python dictionary with fields for the title, date, and completion status of each item. This abstraction obviously makes them much easier to compare and otherwise work with. The step I am on now is applying modifications derived from these comparisons back to the notebook and document from which they were parsed.
