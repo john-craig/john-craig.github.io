@@ -1,0 +1,17 @@
+func() {
+  sunday=$(date -d "-$(date +%u) day");
+  file=$(date --date="${sunday} +1 day" +%m%d%Y)".md"
+
+  echo $file
+
+  for number in {1..5}
+  do
+    echo "**"$(date --date="${sunday} +${number} day" +%m/%d)"**<br/>";
+  done;
+ }
+
+alias newPost='func'
+
+
+#Output date in desired format: date +%m/%d
+#Last sunday: date -d "-$(date +%u) day"
