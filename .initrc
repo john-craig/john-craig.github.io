@@ -1,26 +1,25 @@
 func() {
   sunday=$(date -d "-$(date +%u) day");
   file=$(date --date="${sunday} +1 day" +%m%d%Y)".md"
+  entry="$(date +%b) $(date --date="${sunday} +1 day" +%d) - $(date --date="${sunday} +5 days" +%d), $(date +%Y)"
 
-  echo $file
-
+  #Build the new file
   for number in {1..5}
   do
     echo "**"$(date --date="${sunday} +${number} day" +%m/%d)'**<br/>\n' >> ./devlogs/$file;
     echo '\n</br></br>\n' >> ./devlogs/$file;
   done;
+
+  #Update the readme
+  cat README.md | head -n 1 > tmp
+  echo "[$entry](./devlogs/$file) <br/>" >> tmp
+  cat README.md | tail -n +2 >> tmp
+
+  cat tmp > README.md
+  rm tmp
  }
 
 alias newPost='func'
 
 
-#Output date in desired format: date +%m/%d
-#Last sunday: date -d "-$(date +%u) day"
-
-sunday=$(date -d "-$(date +%u) day");
-entry="$(date +%b) $(date --date="${sunday} +1 day" +%d) - $(date --date="${sunday} +5 days" +%d) $(date +%Y)"
-
-# Make sure that the date produces a leading zero for single-digit days
-# Build out the full [Date](./devlogs/filename.md) entry
-# Prepend it to the README.md
 # Create a cronjob to build the new entry and run gitsync
