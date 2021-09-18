@@ -6,8 +6,8 @@ func() {
   #Build the new file
   for number in {1..5}
   do
-    echo "**"$(date --date="${sunday} +${number} day" +%m/%d)'**<br/>\n' >> ./devlogs/$file;
-    echo '\n</br></br>\n' >> ./devlogs/$file;
+    echo -e "**"$(date --date="${sunday} +${number} day" +%m/%d)'**<br/>\n' >> ./devlogs/$file;
+    echo -e '\n</br></br>\n' >> ./devlogs/$file;
   done;
 
   #Update the readme
