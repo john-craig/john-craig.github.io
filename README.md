@@ -1,4 +1,5 @@
 ## Development Logs
+[Sep 27 - Aug 1, 2021](./devlogs/09272021.md) <br/>
 [Sep 20 - 24, 2021](./devlogs/09202021.md) <br/>
 [Sep 13 - 17, 2021](./devlogs/09132021.md) <br/>
 [Sep 06 - 10, 2021](./devlogs/09062021.md) <br/>
