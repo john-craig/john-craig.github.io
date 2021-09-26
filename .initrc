@@ -12,7 +12,7 @@ func() {
 
   #Update the readme
   cat README.md | head -n 1 > tmp
-  echo "[$entry](./devlogs/$file) <br/>" >> tmp
+  echo "[$entry](./prod/devlogs/$file) <br/>" >> tmp
   cat README.md | tail -n +2 >> tmp
 
   cat tmp > README.md
