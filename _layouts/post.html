@@ -1,36 +1,25 @@
-<!DOCTYPE html>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+---
+layout: default
+---
 
-{% include head.html %}
+{% include site-header.html %}
 
-<body>
+<main class="main  container">
 
-    {% include header.html %} 
-    
-    
-<!-- Main -->
-<div id="main" class="alt">
+  <article class="article  article--post  content  typeset">
 
-<!-- One -->
-<section id="one">
-	<div class="inner">
-		<header class="major">
-			<h1>{{ page.title }}</h1>
-		</header>
-		{% if page.image %}<span class="image main"><img src="{{ site.baseurl }}/{{ page.image }}" alt="" /></span>{% endif %}
-		{{ content }}
-	</div>
-</section>
+    <h1>{{ page.title }}</h1>
+    {% include post-meta.html %}
+    {{ content }}
 
-</div>
+    {% include nav-share.html %}
 
-    {% include footer.html %}
+    {% include post-comments.html %}
 
-</body>
+  </article>
 
-</html>
+  {% if page.aside == true %}{% include site-aside.html %}{% endif %}
+
+</main>
+
+{% include site-footer.html %}

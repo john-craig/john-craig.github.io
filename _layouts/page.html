@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+---
+layout: default
+---
 
-{% include head.html %}
+{% include site-header.html %}
 
-<body>
-    <script type="text/javascript">document.body.classList.add("is-loading");</script>
+<main class="main  container">
 
-    {% include header.html %} {{ content }} {% include footer.html %}
+  <article class="article  article--page  content  typeset">
 
-</body>
+    <h1>{{ page.title }}</h1>
 
-</html>
+    {{ content }}
+
+  </article>
+
+  {% if page.aside == true %}{% include site-aside.html %}{% endif %}
+
+</main>
+
+{% include site-footer.html %}
