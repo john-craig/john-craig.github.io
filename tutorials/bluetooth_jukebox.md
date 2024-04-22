@@ -1,4 +1,7 @@
-## Tutorial: Multi-Room Bluetooth Jukebox
+---
+title: "Tutorial: Multi-Room Bluetooth Jukebox"
+feature_image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa9%2Fc8%2F7e%2Fa9c87e53a86bd7e70f0afec46f68a8c5.jpg&f=1&nofb=1&ipt=8c96772708e335b26704ceaa9f169db5c48cb6a137d40420a3e17e190b906dfd&ipo=images"
+--- 
 
 ### Introduction
 
