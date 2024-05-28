@@ -1,0 +1,1 @@
+Like any homelabber, I love having Grafana dashboards displaying metrics about my hardware. Don't even really spend that much tiome looking at them-- I just like knowing they're there.

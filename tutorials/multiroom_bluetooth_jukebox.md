@@ -1,23 +1,20 @@
 ---
 title: Multi-Room Bluetooth Jukebox
 ---
+# Tutorial: Multi-Room Bluetooth Jukebox
 
-**Introduction**
-
+## Introduction
 I am at the point where I almost cannot shower without listening to music or a podcast. However, this has historically presented a challenge for me, because it meant that upon getting out of the shower, I would have to pick up the speaker I was using to play music and carry it around with me as I got dressed, or else lose my precious tunes.
 
 One solution to this would be to purchase multiple bluetooth speakers and place them in different rooms. Unfortunately, the bluetooth signal on my phone isn't quite strong enough to remain connected to a speaker in my kitchen while I'm in the bathroom, and vice-versa. Plus, it's a bit of a hassle to manually turn on all of the speakers I wanted to use, adding yet another step to my pre-shower ritual.
 
 What I really needed with a bluetooth jukebox, a host that would be in a stationary and ideally central location, and maintain a constant connection to all of the speakers that I wanted to use. Then I could connect to the jukebox with my phone and use it to broadcast the music I wanted to play. The range issue could be solved with a sufficiently powerful plug-and-play bluetooth adapter.
 
-**Tutorial**
-
-*Prerequisites*
-
+## Instructions
+**Prerequisites**  
 For my bluetooth jukebox, I chose a Beelink Mini PC. I used NixOS for the operating system, and installed `pipewire` and `wireplumber` to use for audio, for their good bluetooth support.
 
-*Finding Bluetooth Adapter Address*
-
+**Finding Bluetooth Adapter Address**  
 To get started, I needed to collect some information about the available bluetooth adapters, namely the MAC address of each one.
 
 The simple way to accomplish this is to issue the `bluetoothctl list` command, to list the current bluetooth adapters on the system, then unplug the plug-and-play adapter, and re-issue the command to see which of them sticks around.
@@ -54,8 +51,7 @@ hci0:   Type: Primary  Bus: USB
 
 Going forwards, we will assume that the MAC address of your plug-and-play adapter is `FF:FF:FF:FF:FF:FF`, and the MAC address of your device's built-in adapter is `AA:AA:AA:AA:AA:AA`.
 
-*Connecting Bluetooth Devices*
-
+**Connecting Bluetooth Devices**  
 Next, we will connect the devices to which you wish to play audio from your jukebox. [This](https://superuser.com/questions/931188/how-many-devices-can-be-hooked-up-to-one-pc-bluetooth-adapter-at-a-time#935508) StackOverflow question gives a good explanation of the limits of the number of devices which can be connected to a single bluetooth adapter.
 
 In order to do this, we want to perform the following steps:
@@ -92,8 +88,7 @@ trust 99:99:99:99:99:99
 
 It's possible that this could be fixed by setting `MultiProfile = multiple` in `/etc/bluetooth/main.conf`, but I haven't tried that myself.
 
-*Configuring Pipewire and Wireplumber*
-
+**Configuring Pipewire and Wireplumber**  
 To set up multi-room playback on our jukebox, we first want to created a [combined sink](https://docs.pipewire.org/page_module_combine_stream.html) in Pipewire. This is a sink that will stream audio to all other available sinks. In `/etc/pipewire/pipewire.conf.d`, create a file named `50-combined-sink.conf` with the following contents:
 
 ```
