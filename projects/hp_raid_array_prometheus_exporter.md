@@ -2,7 +2,7 @@
 title: "HP Smart Array S.M.A.R.T. Prometheus Exporter"
 ---
 # Project Spotlight: HP Smart Array S.M.A.R.T. Prometheus Exporter
-### Introduction
+## Introduction
 Like any homelabber, I love having Grafana dashboards displaying metrics about my hardware. Uptime, RAM utilization, CPU load, you name it. These metrics are usually displayed by querying a time-series data model called [Prometheus](https://prometheus.io/docs/introduction/overview/), which itself aggregrates metrics from a variety of different sources. 
 
 One common type of Prometheus source is called an *exporter*, a program which either observes the activity of a system or application and surfaces that activity over an HTTP server in a standardized format easily consumable by Prometheus. For example, the exporter used to collect metrics from a host computer is called the [node_exporter](https://github.com/prometheus/node_exporter).
@@ -10,19 +10,19 @@ One common type of Prometheus source is called an *exporter*, a program which ei
 Some of these metrics are very important to keep an eye on: for example, knowing if a machine is too hot based on its current CPU temperature, or if it's about to run out of storage based on its disk utilization. When it comes to hard drives, it's also very important to know if a drive is close to failure, so you can make preparations to replace it.
 
 ### S.M.A.R.T. Tests
-[Self-monitoring, Analysis and Reporting Technology System (S.M.A.R.T.)](https://www.smartmontools.org/) is a protocol available on most modern hard drives. It can be used to run tests against disks that will show signs of degradation or impending failure, as well as collecting information about the disk's lifetime usage of bytes read, total operational hours, and so on.
+[Self-monitoring, Analysis and Reporting Technology System (S.M.A.R.T.)](https://www.smartmontools.org/) is a protocol available on most modern hard drives. It can be used to run tests against disks that will show signs of degradation or impending failure, while also collecting information about the disk's lifetime usage of bytes read, total operational hours, and so on.
 
 These are a strong, but not guaranteed, early warning sign of drive failure, and so naturally there is a Prometheus exporter which is used to surface S.M.A.R.T. data as metrics: the [smartctl_exporter](https://github.com/prometheus-community/smartctl_exporter), written in Go. This is a very effective tool when targeting disks that are directly accessible to the operating system. Where it falls short, however, is in hardware RAID arrays.
 
 ### HP Smart Array
-See, now you understand why I used periods in the initialization of S.M.A.R.T. It's so you won't get it confused with Smart Arrays. :)
+Now you understand why I insisted on using periods in the initialization of S.M.A.R.T. It's so you won't get it confused with Smart Arrays. :\)
 
 [Hewlett Package Smart Array Controllers](https://support.hpe.com/connect/s/product?language=en_US&kmpmoid=3883890&tab=manuals) are a type of hardware RAID array, usually found in HP ProLiant servers. I won't go too far into the weeds of RAID arrays here, so suffice to say that when using a RAID array, the individual disks of the array are opaque to the operating system, appearing instead as a single very large physical disk.
 
 These individual disks can be interacted with using a special set of utilities-- in this case, a CLI program called [`hpssacli`](https://support.hpe.com/connect/s/softwaredetails?language=en_US&softwareId=MTX_05d4c11e7ed3433e85c89ea604). `smartctl`, the CLI program used to run S.M.A.R.T. tests manually, also has support for running tests against an array's individual disks, so long as the correct drivers are installed and the command is formulated correctly. 
 
-### The Problem
-The existing `smartctl_exporter`, which is the program that collects the output of a test run by `smartctl` and exposes it as Prometheus metrics, does *not* support running tests against individual disks. This is really no fault of the exporter itself. Recall that I mentioned that although `smartctl` has the ability to run such tests, it [requires a special format of command](https://www.reddit.com/r/sysadmin/comments/f7ub4x/checking_smart_status_of_drives_in_raid/). Here's what that looks like:
+## The Project
+The existing `smartctl_exporter`, does *not* support running tests against individual disks. This is really no fault of the exporter itself. Recall that I mentioned that although `smartctl` has the ability to run such tests, it [requires a special format of command](https://www.reddit.com/r/sysadmin/comments/f7ub4x/checking_smart_status_of_drives_in_raid/). Here's what that looks like:
 ```
 # Against a normal disk
 smartctl -d /dev/sda
@@ -31,9 +31,9 @@ smartctl -d /dev/sda
 smartctl -d ciss,0 /dev/sg0
 ```
 
-Notice the second command takes a path to a device, as well as this `ciss,0` piece. The `0` is the index of the physical disk in the RAID array, while the `/dev/sg0` path is a way of referencing the RAID array logically using the [SCSI Generic driver](https://sg.danny.cz/sg/). To my knowledge, there is not a way of generically determining how many physical disks are located inside of a hardware RAID array controller. Some controllers have eight slots, some have only four, some have sixteen, and so on and so on. The number of slots can usually only be identified using a utility specific to that hardware controller.
+The second command takes a path to a device, as well as the `ciss,0` piece. The `0` is the index of the physical disk in the RAID array, while the `/dev/sg0` path is a way of referencing the RAID array logically using the [SCSI Generic driver](https://sg.danny.cz/sg/). To my knowledge, there is not a way of generically determining how many physical disks are located inside of a hardware RAID array controller. Some controllers have eight slots, some have only four, some have sixteen, and so on. The number of slots can usually only be identified using a utility specific to that hardware controller.
 
-This makes the task of supporting S.M.A.R.T. metrics on hardware RAID arrays much more difficult for the `smartctl_exporter`. They would have to check if the bespoke CLI utility for each supported model of RAID array, then go into special-case logic to invoke that utility to determine the number of individual disks in that controller. Hypothetically they could do something like attempting to run the tests against a range of disks sequentially until the command fails, then cache the number for later, but this is still rather inelegant.
+This makes the task of supporting S.M.A.R.T. metrics on hardware RAID arrays much more difficult for the `smartctl_exporter` project. They would have to check if the bespoke CLI utility for each supported model of RAID array was available on the platform, then go into special-case logic to invoke that utility to determine the number of individual disks in that controller. Hypothetically they could do something like attempting to run the tests against a range of disks sequentially until the command fails, then cache the number for later, but this is still rather inelegant.
 
 What might work better is an entirely separate exporter dedicated to the RAID array controller it is intended to collect the metrics for.
 
@@ -47,4 +47,12 @@ So my little fork of `smartctl_ssacli_exporter` became more or less a full rewri
 
 Initially I waffled about whether or not to just open a pull request against `smartctl_exporter` and add the functionality there instead, but decided that the dependency upon the `hpssacli` utility that my implementation would introduce meant that it was best left as a dedicated project.
 
-### 
+### Preserving the Principle of Least Privilege
+Not long after I finished coding the changes to `smartctl_ssacli_exporter` did I encounter another problem: the `hpssacli` utility must be run as root. Generally, it's considered bad practice to allow utilities to have root privileges, because it means if there is a vulnerability in that utility that allows an attacker to gain control of the process, then it can wreak a lot havoc. Linux has a litany of different access controls that can be used to give processes or users more granular privileges to certain system resources without giving them full root privileges.
+
+Unfortunately, none of these more granular privileges are acceptable for `hpssacli`. I spent a good bit of time looking at its system calls using `strace` to see if I could figure out a way around it, but my guess is that it just checks if it is running under a hard-coded UID and quits. [Here](https://medium.com/opsops/why-smartctl-could-not-be-run-without-root-7ea0583b1323) is a good article diving into further detail about the problem.
+
+So, what's the next best thing? Well, even if `hpssacli` absolutely *has* to run with root privileges, that doesn't mean `smartctl_ssacli_exporter` does too. We can use a privilege escalation tool, such as `sudo`. Fortunately, `sudo` can be configured to only allow privilege escalation for certain commands or executables. This way the process that is running the exporter can be permitted to run only `hpssacli` as root, without being allowed to execute any other processes as root. While still not perfect, it means that compromising `smartctl_ssacli_exporter` on its own doesn't buy an attacker very much.
+
+## Conclusion
+This project started out pretty simple and increased in size and complexity with each step. But, it was a good opportunity to dabble in the Golang programming language and learn a lot more about Linux access controls than I had previously ever understood. You can find the finished product on my Github, [here](https://github.com/john-craig/smartctl_ssacli_exporter).
