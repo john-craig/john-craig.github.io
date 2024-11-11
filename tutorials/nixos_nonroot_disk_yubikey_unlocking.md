@@ -78,3 +78,5 @@ Let's look at these options a little bit:
 * `headless=true` this prevents `systemd-cryptenroll` from falling back to manual password entry if the token unlock fails.
 
 Of these options, the most important as `nofail`, as without it you may get yourself stuck in an error state upon your next reboot and have to do some very messy recovery.
+
+With these settings in place, you should be able to reliably restart your machine and rely on the Yubikey for unlocking the encrypted partitions. Once again, user presence must still be verified for the Yubikey to perform the unlock properly, so you will still need to have physical access to the protected device and be able to respond to outages that would require an unlock in a timely manner.
