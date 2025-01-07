@@ -56,12 +56,5 @@ Of course, what good are encrypted offsite backups if they can't be retrieved? I
 s3cmd get s3://my-offsite-backups/offsite-backup.tar.gz.gpg - | gpg --decrypt | tar -xzf - -C /srv/backup
 ```
 
-
-## Troubleshooting
-
-
-
-
-```
-tar -czf - /srv/backup/ | gpg --encrypt --always-trust --recipient offsite-backup --homedir /sec/gnupg/pxe_server/service/.gnupg | s3cmd --config=/sec/s3cmd/pxe_server/service/.s3cfg --multipart-chunk-size-mb=500 put - s3://chiliahedron-offsite-backups/backup-$BACKUP_IDX.tar.gz.gpg
-```
+## Conclusion
+Hopefully this tutorial gives you the means to make your data safer and stored more reliably while not having to compromise on security. Have a nice day. :\)
