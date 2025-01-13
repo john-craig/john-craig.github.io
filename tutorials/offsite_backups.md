@@ -12,7 +12,7 @@ In this tutorial we will take a look at how to use Unix pipes to create compress
 For this tutotial, we will be using `tar`, `gnupg`, and `s3cmd`. These should all be installed and available in your PATH. 
 
 **Compression**
-The first step in our process should be compressing the file. This is because the following steps-- encryting the backups and transferring them-- are both made easier when working with a single file.
+The first step in our process should be compressing the file. This is because the following steps-- encrypting the backups and transferring them-- are both made easier when working with a single file.
 
 For this we can simply use `tar`. If your backup is located at `/srv/backup`, the first part of our command looks like so:
 
@@ -25,7 +25,7 @@ Note the `-` as the destination argument. That will be used to send the output o
 **Encryption**
 For encryption we will use `gnupg`. Our first step will be to generate a key pair to use for the encryption. 
 
-To do this we will use the command `gpg --full-gen-key`. After issuing this command, you will be short a series of prompts. These should be left as the default values, unless you know what you are doing. 
+To do this we will use the command `gpg --full-gen-key`. After issuing this command, you will be given a series of prompts. These should be left as the default values, unless you know what you are doing. 
 
 When asked to provide a "Real name" for the user ID of the key, specify a suitable title, such as `offline-backup`. The "Email address" and "Comment" prompts may be filled in as you chose.
 
@@ -33,6 +33,8 @@ Once we have generated our key, we are ready to introduce the next command in ou
 ```
 gpg --encrypt --recipient offsite-backup
 ```
+
+Because we have not specified arguments for input and output, this command will implicitly read from stdin and output to stdout.
 
 **Transferring**
 For the transfer, we will be using `s3cmd`. To start off with, you will need to configure the credentials of the backup provider you are using. This can be initiated using `s3cmd --configure`, which will show you a series of prompts.
@@ -43,6 +45,8 @@ Once these credentials have been configured, we are ready for the final part of 
 ```
 s3cmd --multipart-chunk-size-mb=500 put - s3://my-offsite-backups/offsite-backup.tar.gz.gpg
 ```
+
+In this case, the `-` means that the input is being recieved from stdin. The `--multipart-chunk-size-mb=500` option specifies the size of the each chunk of the upload that is buffered before being sent. In my personal testing, a larger size has meant faster uploads over the long term.
 
 **Putting it Together**
 Now we can assemble our final command:
