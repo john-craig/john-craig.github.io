@@ -2,7 +2,7 @@
 title: "TOTP Port Knocking"
 ---
 # Project: TOTP Port Knocking
-Repository: TBD.
+Repository: https://github.com/john-craig/totp-port-knockd-rs
 
 ## Traditional Port Knocking
 Traditional port knocking is a network security specialty that makes a computer into a speakeasy. A client seeking to enter must perform the correct pattern of knocks, and the door opens for them. "Shave and a haircut" might get you right inside, while "S.O.S." just gets you the cold shoulder. In technical terms, this is accomplished by sending a series of packets to different ports on the machine. All ports are closed, and these packets appear to be dropped, but the machine can still register on which port they were recieved. When it sees the correct pattern of ports was knocked by the same host, it will open up a protected port for connections from that host for a limited period of time.
