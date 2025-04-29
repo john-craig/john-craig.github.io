@@ -1,7 +1,7 @@
 ---
 title: "Timeflip Server"
 ---
-# Project Spotlight: Timeflip Server
+# Project: Timeflip Server
 
 ### The Device
 The [TimeFlip2](https://timeflip.io/) is twelve-sided bluetooth dice about the size of your fist. Its intended use is for time tracking, and it's primarily targeted towards freelancers who may want to keep precise track of their hours worked on a specific project. Each side of the dice is assigned a task or an activity, and a timer is started when that side is faced up.

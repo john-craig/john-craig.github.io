@@ -1,7 +1,7 @@
 ---
 title: "HP Smart Array S.M.A.R.T. Prometheus Exporter"
 ---
-# Project Spotlight: HP Smart Array S.M.A.R.T. Prometheus Exporter
+# Project: HP Smart Array S.M.A.R.T. Prometheus Exporter
 ## Introduction
 Like any homelabber, I love having Grafana dashboards displaying metrics about my hardware. Uptime, RAM utilization, CPU load, you name it. These metrics are usually displayed by querying a time-series data model called [Prometheus](https://prometheus.io/docs/introduction/overview/), which itself aggregrates metrics from a variety of different sources. 
 
