@@ -1,5 +1,5 @@
 ---
-title: Automated Offline Backups
+title: Setting up Automated Offline Backups on External Hard Drives
 ---
 # Tutorial: Automated Offline Backups
 ## Introduction
@@ -142,3 +142,6 @@ Additionally, I would argue that if any attacker already has physical access to 
 Having said that, if you're like me and these "What if's" keep you up at night regardless of their plausibility, my approach to tackling this problem would be this: at the end of each backup, the backup process would create a signature of the contents of the backup using a private key and store it on another partition or subvolume on the drive. This signature would then have to be validated the next time the drive is unlocked.
 
 This would add two very long and expensive steps to the backup process each time, and it would require an extra step to bootstrap the first signature on the empty drive manually, but it would guarantee that the drive is trustworthy each time a backup is performed.
+
+## Conclusion
+Offline backups are a useful last line of defense against data loss. Whether it be mission critical data for a business or irreplacable family photos, using offline backups with an external hard drive, or another storage medium which can be stored disconnected from the internet is a precaution worth investing time into.
