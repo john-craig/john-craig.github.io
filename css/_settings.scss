@@ -1,34 +1,45 @@
 ///////////////////////////////////////
-// css theme variables / settings
-
+// SynthWave 84 inspired Jekyll theme variables
 
 $font-family:       "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 $code-font-family:  Menlo, Monaco, "Courier New", monospace;
 
+// Masthead
+$masthead-color:         #ffffff;   // main text in header
+$masthead-small-color:   #ffffff80; // muted header elements
 
-$masthead-color:         #505050;
-$masthead-small-color:   #C0C0C0;
+// Post title & date
+$post-title-color:       #ff7edb;   // bright neon pink
+$post-date-color:        #72f1b8;   // teal / cyan accent
 
-$post-title-color:       #303030;
-$post-date-color:        #9a9a9a;
+// Body colors
+$body-color:            #ffffff;      // default text color
+$body-background-color: #262335;      // dark purple background
 
+$link-color:            #f97e72;      // link color pink/orange accent
 
-$body-color:            #515151;
-$body-background-color: #fff;
+// Headings
+$headings-color:        #f97e72;      // bright accent for headings
 
-$link-color:            #268bd2;
+// Strong
+$strong-color:          #ff7edb;      // strong emphasis in pink
 
-$headings-color:        #313131;    // h1,h2,h3,h4,h5,h6
+// Preformatted text / code blocks
+$pre-background-color:  #2a2139;      // dark purple code background
+$pre-color:             #ffffff;      // code text color
 
-$strong-color:          #303030;    // strong
+// Blockquotes
+$blockquote-color:        #72f1b8;    // cyan highlight for blockquotes
+$blockquote-border-color: #34294f;    // subtle dark border
 
-$pre-background-color:  #f9f9f9;    // pre
+// Tables
+$table-border-color:         #34294f;  // subtle dark border
+$table-odd-background-color: #241b2f;  // darker stripe for contrast
+$table-even-background-color: #2a2139; // alternating row
 
-$blockquote-color:        #7a7a7a;  // blockquote
-$blockquote-border-color: #e5e5e5;
-
-$table-border-color:         #e5e5e5;
-$table-odd-background-color: #f9f9f9;
-
-
+// Additional optional highlights
+$code-keyword-color:        #fede5d;  // bright yellow for keywords
+$code-string-color:         #ff8b39;  // orange strings
+$code-comment-color:        #848bbd;  // muted blue comments
+$code-function-color:       #36f9f6;  // cyan for function names
+$code-variable-color:       #ff7edb;  // pink for variables
