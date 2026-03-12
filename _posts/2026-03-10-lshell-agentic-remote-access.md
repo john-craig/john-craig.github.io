@@ -15,13 +15,23 @@ One useful tool for restricting an AI agent's capabilities on a remote system is
 This means that by creating a dedicated user for our AI agent and changing their shell to `lshell`, we can control exactly which commands the AI agent is capable of executing on the remote server. If we wanted our agent to be able to retrieve system diagnostics, for example, we might permit a set of commands like `netstat`, for seeing which ports are open, or `top`, to see which processes are using the most resources.
 
 ```
-TODO: example
+[global]
+logpath = /tmp/lshell.log
+loglevel = 0
+
+[default]
+allowed = [ 'netstat', 'top' ]
+forbidden = [';', '&', '|', '`', '>', '<', '$(', "${"]
+sudo_commands   = [  ]
+warning_counter = 3
+overssh = [ 'netstat', 'top' ]
 ```
 
 We can also combine these per-command restrictions at the shell level with the existing per-command privilege escalation restrictions provided by `sudo`. For example, if we wanted our agent to retrieve the status of `systemd` units, as well as logs from the system journal, we might create a `/etc/sudoers` entry like so:
 ```sh
-TODO: example
+agent     ALL=(ALL:ALL)    NOPASSWD: /usr/bin/systemctl status, NOPASSWD: /usr/bin/systemctl show, NOPASSWD: /usr/bin/systemctl list-unit-files, NOPASSWD: /usr/bin/journalctl
 ```
+Note that these will also require adding the `sudo`, `systemctl`, and `journalctl` commands to the above `lshell.conf` file.
 
 These kinds of configurations allow our AI agents to safely and securely retrieve information from a remote system without the risk of making unintended modifications while doing so. 
 
