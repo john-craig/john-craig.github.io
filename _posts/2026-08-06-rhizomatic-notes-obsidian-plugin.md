@@ -126,7 +126,7 @@ The query combines two topics, so the journal becomes a single view of the progr
 
 ## Installation
 
-If the rhizomatic knowledge system described in this article of interest to you, the [Rhizomatic Notes plugin](https://github.com/john-craig/rhizomatic-themagraphs-obsidian) is public, so it is possible to install the plugin directly from its source. This is a little more involved than installing a plugin from Obsidian's community-plugin browser, but it only takes a few steps:
+If the rhizomatic knowledge system described in this article is of interest to you, the [Rhizomatic Notes plugin](https://github.com/john-craig/rhizomatic-themagraphs-obsidian) is public, so it is possible to install the plugin directly from its source. This is a little more involved than installing a plugin from Obsidian's community-plugin browser, but it only takes a few steps:
 
 1. Install [Node.js](https://nodejs.org/) and Git if they are not already installed.
 2. Clone the repository and install its dependencies:
